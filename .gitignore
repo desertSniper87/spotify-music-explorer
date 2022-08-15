@@ -32,3 +32,4 @@ yarn-error.log*
 # production
 
 # misc
+/yarn.lock
