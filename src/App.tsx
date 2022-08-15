@@ -1,15 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import AuthFlow from "./components/AuthFlow";
+import {AppStateContext} from './context';
+import useStorage, {STORAGE_KEY} from "./hooks/useStorage";
 
 function App() {
-  return (
-    <div className="App">
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-    </div>
-  );
+
+    const [token, setToken, deleteToken] = useStorage(STORAGE_KEY.SPOTIFY_AUTH_KEY, '');
+
+    const stateValue = React.useMemo(
+        () => ({token, setToken}),
+        [token]
+    );
+
+    return (
+        <AppStateContext.Provider value={stateValue}>
+            <div className="App">
+                <AuthFlow/>
+            </div>
+        </AppStateContext.Provider>
+    );
 }
 
 export default App;
